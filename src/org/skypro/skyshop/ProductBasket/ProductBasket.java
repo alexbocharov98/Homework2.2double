@@ -2,9 +2,9 @@ package org.skypro.skyshop.ProductBasket;
 
 import org.skypro.skyshop.product.Product;
 
-public final class ProductBasket {
-    Product[] basket = new Product[5];
-    int count = 0;
+public class ProductBasket {
+    private final Product[] basket = new Product[5];
+    private int count = 0;
 
     public void addProduct(Product product) {
         if (count >= basket.length) {
