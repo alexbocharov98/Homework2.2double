@@ -14,7 +14,7 @@ public class ProductBasket {
         }
     }
 
-    public int summ() {
+    public int getTotalPrice() {
         int result = 0;
         for (int i = 0; i < count; i++) {
             result = result + basket[i].getProductPrice();
@@ -22,14 +22,14 @@ public class ProductBasket {
         return result;
     }
 
-    public void printing() {
+    public void printBasket() {
         if (count == 0) {
             System.out.println("в корзине пусто");
         } else {
             for (int i = 0; i < basket.length; i++) {
                 System.out.println(basket[i].getProductName() + ": " + basket[i].getProductPrice());
             }
-            System.out.println("Итого: " + summ());
+            System.out.println("Итого: " + getTotalPrice());
         }
 
     }

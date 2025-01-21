@@ -19,12 +19,12 @@ public class App {
         productBasket.addProduct(product3);
         productBasket.addProduct(product4);
         productBasket.addProduct(product5);
-        productBasket.printing();
+        productBasket.printBasket();
         System.out.println(productBasket.hasProduct("Хлеб"));
         System.out.println(productBasket.hasProduct("Пицца"));
         productBasket.cleanBasket();
-        productBasket.printing();
-        System.out.println(productBasket.summ());
+        productBasket.printBasket();
+        System.out.println(productBasket.getTotalPrice());
         System.out.println(productBasket.hasProduct("Хлеб"));
 
     }
