@@ -13,7 +13,6 @@ public class ProductBasket {
             basket[count++] = product;
         }
     }
-
     public int getTotalPrice() {
         int result = 0;
         for (int i = 0; i < count; i++) {

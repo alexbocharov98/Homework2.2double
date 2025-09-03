@@ -14,17 +14,14 @@ public class App {
     public static void main(String[] args) {
         List<Product> cart = new ArrayList<>();
 
-        // Создаем товары
         DiscountedProduct discountedProduct = new DiscountedProduct("Хлеб", 500, 15);
         FixPriceProduct fixPriceProduct = new FixPriceProduct("Млоко");
         SimpleProduct simpleProduct = new SimpleProduct("Апельсин", 1500);
 
-        // Добавляем товары в корзину
         cart.add(discountedProduct);
         cart.add(fixPriceProduct);
         cart.add(simpleProduct);
 
-        // Печать содержимого корзины
         printCart(cart);
     }
 
