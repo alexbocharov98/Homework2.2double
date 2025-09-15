@@ -15,7 +15,7 @@ public class App {
         List<Product> cart = new ArrayList<>();
 
         DiscountedProduct discountedProduct = new DiscountedProduct("Хлеб", 500, 15);
-        FixPriceProduct fixPriceProduct = new FixPriceProduct("Млоко");
+        FixPriceProduct fixPriceProduct = new FixPriceProduct("Молоко");
         SimpleProduct simpleProduct = new SimpleProduct("Апельсин", 1500);
 
         cart.add(discountedProduct);

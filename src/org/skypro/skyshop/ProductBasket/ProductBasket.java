@@ -23,14 +23,24 @@ public class ProductBasket {
 
     public void printBasket() {
         if (count == 0) {
-            System.out.println("в корзине пусто");
-        } else {
-            for (int i = 0; i < basket.length; i++) {
-                System.out.println(basket[i].getProductName() + ": " + basket[i].getProductPrice());
-            }
-            System.out.println("Итого: " + getTotalPrice());
+            System.out.println("В корзине пусто");
+            return;
         }
 
+        int totalPrice = 0;
+        int specialCount = 0;
+
+        for (int i = 0; i < count; i++) {
+            Product product = basket[i];
+            System.out.println(product.toString());
+            totalPrice += product.getProductPrice();
+            if (product.isSpecial()) {
+                specialCount++;
+            }
+        }
+
+        System.out.println("Итого: " + totalPrice);
+        System.out.println("Специальных товаров: " + specialCount);
     }
 
     public boolean hasProduct(String productName) {
