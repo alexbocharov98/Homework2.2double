@@ -2,30 +2,41 @@ package org.skypro.skyshop;
 
 
 import org.skypro.skyshop.ProductBasket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
-    public static void main(String args[]) {
-        Product product = new Product("Хлеб", 100);
-        Product product1 = new Product("Молоко", 150);
-        Product product2 = new Product("Масло", 300);
-        Product product3 = new Product("Апельсин", 245);
-        Product product4 = new Product("Банан", 342);
-        Product product5 = new Product("Творог", 543);
-        ProductBasket productBasket = new ProductBasket();
-        productBasket.addProduct(product);
-        productBasket.addProduct(product1);
-        productBasket.addProduct(product2);
-        productBasket.addProduct(product3);
-        productBasket.addProduct(product4);
-        productBasket.addProduct(product5);
-        productBasket.printBasket();
-        System.out.println(productBasket.hasProduct("Хлеб"));
-        System.out.println(productBasket.hasProduct("Пицца"));
-        productBasket.cleanBasket();
-        productBasket.printBasket();
-        System.out.println(productBasket.getTotalPrice());
-        System.out.println(productBasket.hasProduct("Хлеб"));
+    public static void main(String[] args) {
+        List<Product> cart = new ArrayList<>();
 
+        DiscountedProduct discountedProduct = new DiscountedProduct("Хлеб", 500, 15);
+        FixPriceProduct fixPriceProduct = new FixPriceProduct("Молоко");
+        SimpleProduct simpleProduct = new SimpleProduct("Апельсин", 1500);
+
+        cart.add(discountedProduct);
+        cart.add(fixPriceProduct);
+        cart.add(simpleProduct);
+
+        printCart(cart);
+    }
+
+    public static void printCart(List<Product> cart) {
+        int totalPrice = 0;
+        int specialCount = 0;
+
+        for (Product product : cart) {
+            System.out.println(product.toString());
+            totalPrice += product.getProductPrice();
+            if (product.isSpecial()) {
+                specialCount++;
+            }
+        }
+        System.out.println("Итого: " + totalPrice);
+        System.out.println("Специальных товаров: " + specialCount);
     }
 }
