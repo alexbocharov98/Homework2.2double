@@ -9,9 +9,20 @@ public class SimpleProduct extends Product {
     }
 
     @Override
+    public int getPrice() {
+        return 0;
+    }
+
+    @Override
     public int getProductPrice() {
         return productPrice;
     }
+
+    @Override
+    public boolean isSpecial() {
+        return false;
+    }
+
     @Override
     public String toString() {
         return getProductName() + ": " + getProductPrice();

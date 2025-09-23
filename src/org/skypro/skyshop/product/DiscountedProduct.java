@@ -1,5 +1,6 @@
 package org.skypro.skyshop.product;
 
+
 public class DiscountedProduct extends Product {
     private int basePrice;
     private int discountPercent;
@@ -23,5 +24,15 @@ public class DiscountedProduct extends Product {
     @Override
     public boolean isSpecial() {
         return true;
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
+    }
+
+    @Override
+    public String getStringRepresentation() {
+        return super.getStringRepresentation();
     }
 }
