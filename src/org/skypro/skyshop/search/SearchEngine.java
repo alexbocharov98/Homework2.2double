@@ -12,7 +12,7 @@ public class SearchEngine {
         if (count < items.length) {
             items[count++] = item;
         } else {
-            System.out.println("Добавить элемент невозможно");
+            System.out.println("Массив заполнен. Добавить невозможно.");
         }
     }
 
@@ -28,6 +28,40 @@ public class SearchEngine {
                 }
             }
         }
+
         return results;
+    }
+
+
+    public Searchable findBestMatch(String search) throws BestResultNotFound {
+        Searchable bestMatch = null;
+        int maxRepeats = 0;
+
+        for (int i = 0; i < count; i++) {
+            int repeats = countOccurrences(items[i].getSearchTerm(), search);
+            if (repeats > maxRepeats) {
+                maxRepeats = repeats;
+                bestMatch = items[i];
+            }
+        }
+
+        if (bestMatch == null) {
+            throw new BestResultNotFound(search);
+        }
+        return bestMatch;
+    }
+
+        private int countOccurrences(String str, String subStr) {
+        if (subStr.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        int fromIndex = 0;
+
+        while ((fromIndex = str.indexOf(subStr, fromIndex)) != -1) {
+            count++;
+            fromIndex += subStr.length();
+        }
+        return count;
     }
 }

@@ -5,13 +5,12 @@ public class SimpleProduct extends Product {
 
     public SimpleProduct(String productName, int productPrice) {
         super(productName);
+        if (productPrice <= 0) {
+            throw new IllegalArgumentException("Цена не может быть 0");
+        }
         this.productPrice = productPrice;
     }
 
-    @Override
-    public int getPrice() {
-        return 0;
-    }
 
     @Override
     public int getProductPrice() {
