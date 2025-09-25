@@ -8,6 +8,11 @@ public class FixPriceProduct extends Product {
     }
 
     @Override
+    public int getPrice() {
+        return 0;
+    }
+
+    @Override
     public int getProductPrice() {
         return FIXED_PRICE;
     }
