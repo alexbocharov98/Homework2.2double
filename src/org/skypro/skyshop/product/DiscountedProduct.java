@@ -7,6 +7,9 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String productName, int basePrice, int discountPercent) {
         super(productName);
+        if (basePrice <= 0 || discountPercent >= 100) {
+            throw new IllegalArgumentException("Некорректный ввод данных");
+        }
         this.basePrice = basePrice;
         this.discountPercent = discountPercent;
     }
@@ -26,10 +29,6 @@ public class DiscountedProduct extends Product {
         return true;
     }
 
-    @Override
-    public int getPrice() {
-        return 0;
-    }
 
     @Override
     public String getStringRepresentation() {
