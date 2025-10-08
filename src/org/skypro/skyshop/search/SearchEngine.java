@@ -2,6 +2,8 @@ package org.skypro.skyshop.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
     private final List<Searchable> items;
@@ -14,11 +16,13 @@ public class SearchEngine {
         items.add(item);
     }
 
-    public List<Searchable> search(String term) {
-        List<Searchable> results = new ArrayList<>();
+    // Метод поиска теперь возвращает отсортированную Map с ключами - именами
+    public Map<String, Searchable> search(String term) {
+        Map<String, Searchable> results = new TreeMap<>();
+
         for (Searchable item : items) {
             if (item.getSearchTerm().contains(term)) {
-                results.add(item);
+                results.put(item.getName(), item);
             }
         }
         return results;
