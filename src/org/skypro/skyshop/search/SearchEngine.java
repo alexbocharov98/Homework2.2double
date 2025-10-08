@@ -1,63 +1,51 @@
 package org.skypro.skyshop.search;
 
-public class SearchEngine {
-    private final Searchable[] items;
-    private int count = 0;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SearchEngine(int size) {
-        items = new Searchable[size];
+public class SearchEngine {
+    private final List<Searchable> items;
+
+    public SearchEngine() {
+        items = new ArrayList<>();
     }
 
     public void add(Searchable item) {
-        if (count < items.length) {
-            items[count++] = item;
-        } else {
-            System.out.println("Массив заполнен. Добавить невозможно.");
-        }
+        items.add(item);
     }
 
-    public Searchable[] search(String term) {
-        Searchable[] results = new Searchable[5];
-        int resultsCount = 0;
-
-        for (int i = 0; i < count; i++) {
-            if (items[i].getSearchTerm().contains(term)) {
-                results[resultsCount++] = items[i];
-                if (resultsCount == 5) {
-                    break;
-                }
+    public List<Searchable> search(String term) {
+        List<Searchable> results = new ArrayList<>();
+        for (Searchable item : items) {
+            if (item.getSearchTerm().contains(term)) {
+                results.add(item);
             }
         }
-
         return results;
     }
-
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {
         Searchable bestMatch = null;
         int maxRepeats = 0;
-
-        for (int i = 0; i < count; i++) {
-            int repeats = countOccurrences(items[i].getSearchTerm(), search);
+        for (Searchable item : items) {
+            int repeats = countOccurrences(item.getSearchTerm(), search);
             if (repeats > maxRepeats) {
                 maxRepeats = repeats;
-                bestMatch = items[i];
+                bestMatch = item;
             }
         }
-
         if (bestMatch == null) {
             throw new BestResultNotFound(search);
         }
         return bestMatch;
     }
 
-        private int countOccurrences(String str, String subStr) {
+    private int countOccurrences(String str, String subStr) {
         if (subStr.isEmpty()) {
             return 0;
         }
         int count = 0;
         int fromIndex = 0;
-
         while ((fromIndex = str.indexOf(subStr, fromIndex)) != -1) {
             count++;
             fromIndex += subStr.length();
