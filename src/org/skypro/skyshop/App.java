@@ -3,11 +3,13 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.ProductBasket.ProductBasket;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.product.*;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -20,43 +22,43 @@ public class App {
         searchEngine.add(new Article("Обзор мыши", "Обзор игровой мыши с подсветкой."));
         searchEngine.add(new Article("Преимущества ноутбука", "Все преимущества современного ноутбука."));
 
+
         System.out.println("Поиск по запросу 'ноутбук':");
-        List<Searchable> results = searchEngine.search("ноутбук");
+        Map<String, Searchable> results = searchEngine.search("ноутбук");
         if (results.isEmpty()) {
             System.out.println("Результаты не найдены.");
         } else {
-            for (Searchable item : results) {
-                System.out.println(item.getStringRepresentation());
+            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue().getStringRepresentation());
             }
-
-            System.out.println("Содержимое корзины до удаления:");
-            ProductBasket.printBasket();
-
-            // Удаляем существующий продукт "Мышь"
-            List<Product> removed = ProductBasket.removeProductsByName("Мышь");
-            System.out.println("\nУдаленные продукты:");
-            if (removed.isEmpty()) {
-                System.out.println("Список пуст");
-            } else {
-                for (Product product : removed) {
-                    System.out.println(product.toString());
-                }
-            }
-
-            System.out.println("\nСодержимое корзины после удаления продуктов \"Мышь\":");
-            ProductBasket.printBasket();
-
-            // Пробуем удалить несуществующий продукт "Принтер"
-            List<Product> removed2 = ProductBasket.removeProductsByName("Принтер");
-            System.out.println("\nПопытка удалить несуществующий продукт \"Принтер\":");
-
-            if (removed2.isEmpty()) {
-                System.out.println("Список пуст");
-            }
-
-            System.out.println("Содержимое корзины в конце:");
-            ProductBasket.printBasket();
         }
+        System.out.println();
 
+        System.out.println("Поиск по запросу 'чехол':");
+        results = searchEngine.search("чехол");
+        if (results.isEmpty()) {
+            System.out.println("Результаты не найдены.");
+        } else {
+            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue().getStringRepresentation());
+            }
+        }
+        System.out.println();
+
+
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("мышь");
+            System.out.println("Лучший результат по запросу 'мышь': " + bestMatch.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println();
+
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("принтер");
+            System.out.println("Лучший результат по запросу 'принтер': " + bestMatch.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }
