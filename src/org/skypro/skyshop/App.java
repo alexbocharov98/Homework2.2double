@@ -1,51 +1,54 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.ProductBasket.ProductBasket;
 import org.skypro.skyshop.article.Article;
-import org.skypro.skyshop.product.*;
-import org.skypro.skyshop.search.BestResultNotFound;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.search.BestResultNotFound;
 
-
-import java.util.List;
-import java.util.Map;
+import java.util.SortedSet;
 
 public class App {
     public static void main(String[] args) {
         SearchEngine searchEngine = new SearchEngine();
 
-        // Добавление товаров и статей (пример):
+        // Добавляем продукты
         searchEngine.add(new SimpleProduct("Мышь", 1500));
         searchEngine.add(new DiscountedProduct("Ноутбук", 50000, 10));
         searchEngine.add(new FixPriceProduct("Чехол"));
-        searchEngine.add(new Article("Обзор мыши", "Обзор игровой мыши с подсветкой."));
-        searchEngine.add(new Article("Преимущества ноутбука", "Все преимущества современного ноутбука."));
 
+        // Добавляем статьи
+        searchEngine.add(new Article("Обзор мыши", "Обзор игровой мыши с подсветкой"));
+        searchEngine.add(new Article("Преимущества ноутбука", "Все преимущества современного ноутбука"));
+        searchEngine.add(new Article("Выбор чехла", "Как выбрать чехол для телефона"));
 
+        // Поиск по запросу "ноутбук"
         System.out.println("Поиск по запросу 'ноутбук':");
-        Map<String, Searchable> results = searchEngine.search("ноутбук");
+        SortedSet<Searchable> results = searchEngine.search("ноутбук");
         if (results.isEmpty()) {
             System.out.println("Результаты не найдены.");
         } else {
-            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().getStringRepresentation());
+            for (Searchable item : results) {
+                System.out.println(item.getStringRepresentation());
             }
         }
         System.out.println();
 
+        // Поиск по запросу "чехол"
         System.out.println("Поиск по запросу 'чехол':");
         results = searchEngine.search("чехол");
         if (results.isEmpty()) {
             System.out.println("Результаты не найдены.");
         } else {
-            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().getStringRepresentation());
+            for (Searchable item : results) {
+                System.out.println(item.getStringRepresentation());
             }
         }
         System.out.println();
 
-
+        // Поиск наиболее подходящего результата с обработкой исключения
         try {
             Searchable bestMatch = searchEngine.findBestMatch("мышь");
             System.out.println("Лучший результат по запросу 'мышь': " + bestMatch.getStringRepresentation());
