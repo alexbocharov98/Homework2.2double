@@ -1,52 +1,41 @@
 package org.skypro.skyshop.ProductBasket;
 
 import org.skypro.skyshop.product.Product;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class ProductBasket {
-    private static final Map<String, List<Product>> basket = new HashMap<>();
+    private Map<String, List<Product>> products;
 
-    public void addProduct(Product product) {
-        basket.computeIfAbsent(product.getProductName(), k -> new ArrayList<>()).add(product);
+
+    public int getTotalPrice() {
+        return products.values().stream()
+                .flatMap(List::stream)
+                .mapToInt(Product::getProductPrice)
+                .sum();
     }
 
-    public static int getTotalPrice() {
-        int total = 0;
-        for (List<Product> products : basket.values()) {
-            for (Product product : products) {
-                total += product.getProductPrice();
-            }
-        }
-        return total;
-    }
 
-    public static void printBasket() {
-        if (basket.isEmpty()) {
+    public void printBasket() {
+        if (products.isEmpty()) {
             System.out.println("В корзине пусто");
             return;
         }
-        for (List<Product> products : basket.values()) {
-            for (Product product : products) {
-                System.out.println(product.toString());
-            }
-        }
+        products.values().stream()
+                .flatMap(List::stream)
+                .forEach(product -> System.out.println(product.toString()));
+
         System.out.println("Итого: " + getTotalPrice());
+        System.out.println("Количество специальных продуктов: " + getSpecialCount());
     }
 
-    public boolean hasProduct(String productName) {
-        List<Product> products = basket.get(productName);
-        return products != null && !products.isEmpty();
-    }
 
-    public void cleanBasket() {
-        basket.clear();
-    }
-
-    public static List<Product> removeProductsByName(String name) {
-        List<Product> removedProducts = basket.remove(name);
-        if (removedProducts == null) {
-            return new ArrayList<>(); // Возвращаем пустой список, если продукта нет
-        }
-        return removedProducts;
+    private long getSpecialCount() {
+        return products.values().stream()
+                .flatMap(List::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 }

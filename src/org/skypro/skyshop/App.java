@@ -48,7 +48,7 @@ public class App {
         }
         System.out.println();
 
-        // Поиск наиболее подходящего результата с обработкой исключения
+
         try {
             Searchable bestMatch = searchEngine.findBestMatch("мышь");
             System.out.println("Лучший результат по запросу 'мышь': " + bestMatch.getStringRepresentation());
